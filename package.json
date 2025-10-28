@@ -1,0 +1,27 @@
+{
+  "name": "parsely",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"bun run dev:api\" \"bun run dev:worker\"",
+    "dev:api": "bun run --filter=@parsely/api dev",
+    "dev:worker": "cd packages/worker && venv/bin/python src/worker.py",
+    "dev:infra": "docker-compose up -d redis minio minio-init",
+    "setup": "bun install && bun run setup:worker",
+    "setup:worker": "cd packages/worker && python -m venv venv && venv/bin/pip install -r requirements.txt",
+    "worker:install": "cd packages/worker && venv/bin/pip install -r requirements.txt",
+    "clean:worker": "rm -rf packages/worker/venv",
+    "start": "docker-compose up",
+    "start:build": "docker-compose up --build"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "concurrently": "^9.0.0"
+  },
+  "dependencies": {
+    "zod": "^4.1.12"
+  }
+}
