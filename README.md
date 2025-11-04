@@ -42,8 +42,8 @@ Distributed document processing system using Docling workers.
 1. **Clone and setup everything:**
 
 ```bash
-git clone <repo-url>
-cd parsely
+git clone https://github.com/albisserAdrian/parsly
+cd parsly
 bun run setup
 ```
 
