@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "concurrently \"bun run dev:api\" \"bun run dev:worker\"",
     "dev:api": "bun run --filter=@parsely/api dev",
-    "dev:worker": "cd packages/worker && venv/bin/python src/worker.py",
+    "dev:worker": "cd packages/worker && venv/bin/python -u src/worker.py",
     "setup": "bun install && bun run setup:worker",
     "setup:worker": "cd packages/worker && python -m venv venv && venv/bin/pip install -r requirements.txt",
     "setup:docker": "docker-compose up -d redis minio minio-init",

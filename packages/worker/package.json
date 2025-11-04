@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "../venv/bin/python src/worker.py",
+    "dev": "venv/bin/python src/worker.py",
     "setup": "python -m venv venv && venv/bin/pip install -r requirements.txt"
   }
 }
