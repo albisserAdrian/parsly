@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Initialize default converter (can be enhanced with OCR options later)
+# Initialize default converter
 converter = DocumentConverter()
 
 s3_client = boto3.client(
@@ -29,7 +29,6 @@ def get_converter(ocr_engine: str):
     TODO: Configure OCR options based on docling version API
     """
     # For now, return default converter
-    # This can be enhanced when docling API is confirmed
     return converter
 
 
