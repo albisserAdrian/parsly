@@ -4,6 +4,9 @@ import { logger } from "hono/logger";
 import Redis from "ioredis";
 import { createHealthRouter } from "./routes/health";
 import { apiKeyAuth } from "./middleware/auth";
+import { createParseRouter } from "./routes/parse";
+import { createQueue } from "./services/queue";
+import { createStorage } from "./services/storage";
 import { errorHandler } from "./middleware/errors";
 
 const app = new Hono();
@@ -18,6 +21,10 @@ if (process.env.API_KEY) {
   app.use("/v1/*", apiKeyAuth);
 }
 
+// Initialize services
+const queue = createQueue();
+const storage = createStorage();
+
 // Create Redis connection for health checks
 const redis = new Redis({
   host: process.env.REDIS_HOST || "localhost",
@@ -27,6 +34,8 @@ const redis = new Redis({
 
 // Health check endpoint (no auth required)
 app.route("/health", createHealthRouter(redis));
+
+app.route("/v1/parse", createParseRouter(queue, storage));
 
 // Error handling
 app.onError(errorHandler);
