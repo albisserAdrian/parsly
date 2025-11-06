@@ -5,6 +5,8 @@ import Redis from "ioredis";
 import { createHealthRouter } from "./routes/health";
 import { apiKeyAuth } from "./middleware/auth";
 import { createParseRouter } from "./routes/parse";
+import { createStatusRouter } from "./routes/status";
+import { createResultRouter } from "./routes/result";
 import { createQueue } from "./services/queue";
 import { createStorage } from "./services/storage";
 import { errorHandler } from "./middleware/errors";
@@ -36,6 +38,8 @@ const redis = new Redis({
 app.route("/health", createHealthRouter(redis));
 
 app.route("/v1/parse", createParseRouter(queue, storage));
+app.route("/v1/status", createStatusRouter(queue));
+app.route("/v1/result", createResultRouter(queue));
 
 // Error handling
 app.onError(errorHandler);

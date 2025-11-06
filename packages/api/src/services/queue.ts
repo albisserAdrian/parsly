@@ -31,7 +31,7 @@ export function createQueue() {
     maxRetriesPerRequest: null,
   });
 
-  const queueName = process.env.QUEUE_NAME || "docling-conversions";
+  const queueName = process.env.QUEUE_NAME || "docling-parse";
 
   const queue = new Queue<ConversionJobData>(queueName, {
     connection,

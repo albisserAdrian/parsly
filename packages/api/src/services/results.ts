@@ -1,6 +1,6 @@
 import Redis from "ioredis";
 
-export interface ConversionResult {
+export interface ParseResult {
   jobId: string;
   status: "completed" | "failed";
   formats: {
@@ -27,12 +27,12 @@ export class ResultStorage {
     this.ttl = ttl;
   }
 
-  async store(result: ConversionResult): Promise<void> {
+  async store(result: ParseResult): Promise<void> {
     const key = `result:${result.jobId}`;
     await this.redis.setex(key, this.ttl, JSON.stringify(result));
   }
 
-  async get(jobId: string): Promise<ConversionResult | null> {
+  async get(jobId: string): Promise<ParseResult | null> {
     const key = `result:${jobId}`;
     const data = await this.redis.get(key);
     return data ? JSON.parse(data) : null;
@@ -43,7 +43,7 @@ export class ResultStorage {
   }
 
   // Delete after retrieval (single-use)
-  async getAndDelete(jobId: string): Promise<ConversionResult | null> {
+  async getAndDelete(jobId: string): Promise<ParseResult | null> {
     const result = await this.get(jobId);
     if (result && process.env.SINGLE_USE_RESULTS !== "false") {
       // Delete after delay

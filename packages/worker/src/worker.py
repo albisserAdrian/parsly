@@ -32,7 +32,7 @@ def get_converter(ocr_engine: str):
     return converter
 
 
-async def process(job, job_token):
+async def process(job):
     """Process document conversion job"""
     job_id = job.id
     data = job.data
